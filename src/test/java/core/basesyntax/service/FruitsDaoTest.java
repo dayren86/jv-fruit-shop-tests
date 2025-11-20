@@ -4,19 +4,18 @@ import core.basesyntax.dao.FruitsDao;
 import core.basesyntax.dao.FruitsDaoImpl;
 import core.basesyntax.db.Storage;
 import core.basesyntax.model.FruitTransaction;
+import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
 
 public class FruitsDaoTest {
     private FruitsDao fruitsDao;
     private List<FruitTransaction> fruitTransactions;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         this.fruitsDao = new FruitsDaoImpl();
         fruitsDao.add(new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 400));
         fruitsDao.add(new FruitTransaction(FruitTransaction.Operation.BALANCE, "apple", 100));
@@ -37,12 +36,14 @@ public class FruitsDaoTest {
 
     @Test
     public void fruitsDao_getCorrectValue_Ok() {
-        FruitTransaction expectedBanana = new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 400);
+        FruitTransaction expectedBanana
+                = new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 400);
         FruitTransaction fruitTransactionBanana = fruitsDao.get(
                 new FruitTransaction("banana"));
         Assert.assertEquals(expectedBanana, fruitTransactionBanana);
 
-        FruitTransaction expectedApple = new FruitTransaction(FruitTransaction.Operation.BALANCE, "apple", 100);
+        FruitTransaction expectedApple
+                = new FruitTransaction(FruitTransaction.Operation.BALANCE, "apple", 100);
         FruitTransaction fruitTransactionApple = fruitsDao.get(
                 new FruitTransaction("apple"));
         Assert.assertEquals(expectedApple, fruitTransactionApple);
@@ -56,7 +57,8 @@ public class FruitsDaoTest {
 
     @Test
     public void fruitsDao_setFruits_Ok() {
-        FruitTransaction fruitTransaction = new FruitTransaction(FruitTransaction.Operation.RETURN, "banana", 200);
+        FruitTransaction fruitTransaction
+                = new FruitTransaction(FruitTransaction.Operation.RETURN, "banana", 200);
         fruitsDao.set(fruitTransaction);
         Assert.assertEquals(fruitTransaction, fruitsDao.get(fruitTransaction));
     }

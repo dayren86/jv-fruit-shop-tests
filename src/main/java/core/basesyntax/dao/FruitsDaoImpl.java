@@ -2,7 +2,6 @@ package core.basesyntax.dao;
 
 import core.basesyntax.db.Storage;
 import core.basesyntax.model.FruitTransaction;
-
 import java.util.List;
 
 public class FruitsDaoImpl implements FruitsDao {
@@ -26,5 +25,7 @@ public class FruitsDaoImpl implements FruitsDao {
     }
 
     @Override
-    public void set(FruitTransaction fruits) { get(fruits).setQuantity(fruits.getQuantity()); }
+    public void set(FruitTransaction fruits) {
+        get(fruits).setQuantity(fruits.getQuantity());
+    }
 }

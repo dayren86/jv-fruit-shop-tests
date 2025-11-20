@@ -18,7 +18,6 @@ import core.basesyntax.strategy.operation.OperationHandler;
 import core.basesyntax.strategy.operation.PurchaseOperation;
 import core.basesyntax.strategy.operation.ReturnOperation;
 import core.basesyntax.strategy.operation.SupplyOperation;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -8,12 +8,11 @@ import core.basesyntax.strategy.operation.OperationHandler;
 import core.basesyntax.strategy.operation.PurchaseOperation;
 import core.basesyntax.strategy.operation.ReturnOperation;
 import core.basesyntax.strategy.operation.SupplyOperation;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class OperationStrategyTest {
     private FruitsDao fruitsDao;
@@ -35,7 +34,8 @@ public class OperationStrategyTest {
     @Test
     public void operationStrategy_ok() {
         OperationHandler expected = new PurchaseOperation(fruitsDao);
-        OperationHandler operationHandler = operationStrategy.get(FruitTransaction.Operation.PURCHASE);
+        OperationHandler operationHandler
+                = operationStrategy.get(FruitTransaction.Operation.PURCHASE);
         Assert.assertEquals(expected.getClass(), operationHandler.getClass());
     }
   

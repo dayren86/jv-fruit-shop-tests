@@ -19,8 +19,10 @@ public class OperationHandlerTest {
     @Before
     public void setUp() {
         fruitsDao = new FruitsDaoImpl();
-        fruitsDao.add(new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 400));
-        fruitsDao.add(new FruitTransaction(FruitTransaction.Operation.BALANCE, "apple", 100));
+        fruitsDao.add(
+                new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 400));
+        fruitsDao.add(
+                new FruitTransaction(FruitTransaction.Operation.BALANCE, "apple", 100));
         balanceOperation = new BalanceOperation(fruitsDao);
         purchaseOperation = new PurchaseOperation(fruitsDao);
         returnOperation = new ReturnOperation(fruitsDao);
@@ -34,7 +36,8 @@ public class OperationHandlerTest {
 
     @Test
     public void balanceTransaction_DoesntUpdateExistingBalance_notOk() {
-        balanceOperation.transaction(new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 100));
+        balanceOperation.transaction(
+                new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 100));
         FruitTransaction fruitTransaction = fruitsDao.get(new FruitTransaction("banana"));
         Integer expected = 100;
         Assert.assertNotEquals(expected, fruitTransaction.getQuantity());
@@ -42,7 +45,8 @@ public class OperationHandlerTest {
 
     @Test
     public void purchaseTransaction_correctValue_ok() {
-        purchaseOperation.transaction(new FruitTransaction(FruitTransaction.Operation.PURCHASE, "banana", 20));
+        purchaseOperation.transaction(
+                new FruitTransaction(FruitTransaction.Operation.PURCHASE, "banana", 20));
         FruitTransaction fruitTransaction = fruitsDao.get(new FruitTransaction("banana"));
         Integer expected = 380;
         Assert.assertEquals(expected, fruitTransaction.getQuantity());
@@ -50,12 +54,14 @@ public class OperationHandlerTest {
 
     @Test(expected = RuntimeException.class)
     public void purchaseTransaction_incorrectValue_notOk() {
-        purchaseOperation.transaction(new FruitTransaction(FruitTransaction.Operation.PURCHASE, "banana", 500));
+        purchaseOperation.transaction(
+                new FruitTransaction(FruitTransaction.Operation.PURCHASE, "banana", 500));
     }
 
     @Test
     public void returnTransaction_ok() {
-        returnOperation.transaction(new FruitTransaction(FruitTransaction.Operation.RETURN, "banana", 5));
+        returnOperation.transaction(
+                new FruitTransaction(FruitTransaction.Operation.RETURN, "banana", 5));
         FruitTransaction fruitTransaction = fruitsDao.get(new FruitTransaction("banana"));
         Integer expected = 405;
         Assert.assertEquals(expected, fruitTransaction.getQuantity());
@@ -63,7 +69,8 @@ public class OperationHandlerTest {
 
     @Test
     public void supplyTransaction_ok() {
-        supplyOperation.transaction(new FruitTransaction(FruitTransaction.Operation.SUPPLY, "banana", 5));
+        supplyOperation.transaction(
+                new FruitTransaction(FruitTransaction.Operation.SUPPLY, "banana", 5));
         FruitTransaction fruitTransaction = fruitsDao.get(new FruitTransaction("banana"));
         Integer expected = 405;
         Assert.assertEquals(expected, fruitTransaction.getQuantity());
