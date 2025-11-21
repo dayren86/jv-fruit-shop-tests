@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FruitShopApplication {
+public class Main {
     private static final String FILE_PATH = "src/main/resources/fruits.csv";
     private static final String REPORT_FILE_PATH = "src/main/resources/report_fruits.csv";
 

@@ -95,7 +95,8 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>**/FruitShopApplication*</exclude>
+                        <exclude>**/Main*</exclude>
+                        <exclude>**/FruitTransaction*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
