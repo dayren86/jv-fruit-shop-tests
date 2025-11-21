@@ -28,10 +28,6 @@ public class ReportGeneratorTest {
                 + "apple,90\n";
         String report = reportGenerator.getReport();
 
-        System.out.println(expected);
-
-        System.out.println(report);
-
         Assert.assertEquals(expected, report);
     }
 }
