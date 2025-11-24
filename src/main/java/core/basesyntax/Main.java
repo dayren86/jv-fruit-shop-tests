@@ -3,14 +3,16 @@ package core.basesyntax;
 import core.basesyntax.dao.FruitsDao;
 import core.basesyntax.dao.FruitsDaoImpl;
 import core.basesyntax.model.FruitTransaction;
-import core.basesyntax.service.FileService;
-import core.basesyntax.service.FileServiceImpl;
 import core.basesyntax.service.OperationStrategy;
 import core.basesyntax.service.OperationStrategyImpl;
+import core.basesyntax.service.ReadFileService;
+import core.basesyntax.service.ReadFileServiceImpl;
 import core.basesyntax.service.ReportGenerator;
 import core.basesyntax.service.ReportGeneratorImpl;
 import core.basesyntax.service.ShopService;
 import core.basesyntax.service.ShopServiceImpl;
+import core.basesyntax.service.WriteFileService;
+import core.basesyntax.service.WriteFileServiceImpl;
 import core.basesyntax.service.converter.DataConverter;
 import core.basesyntax.service.converter.DataConverterImpl;
 import core.basesyntax.strategy.operation.BalanceOperation;
@@ -27,8 +29,8 @@ public class Main {
     private static final String REPORT_FILE_PATH = "src/main/resources/report_fruits.csv";
 
     public static void main(String[] args) {
-        FileService fileService = new FileServiceImpl();
-        List<String> stringsFromFile = fileService.readFromFile(FILE_PATH);
+        ReadFileService readFileService = new ReadFileServiceImpl();
+        List<String> stringsFromFile = readFileService.readFromFile(FILE_PATH);
 
         FruitsDao fruitsDao = new FruitsDaoImpl();
 
@@ -50,6 +52,7 @@ public class Main {
         ReportGenerator reportGenerator = new ReportGeneratorImpl(fruitsDao);
         String resultingReport = reportGenerator.getReport();
 
-        fileService.writeReportToFile(resultingReport, REPORT_FILE_PATH);
+        WriteFileService writeFileService = new WriteFileServiceImpl();
+        writeFileService.writeReportToFile(resultingReport, REPORT_FILE_PATH);
     }
 }

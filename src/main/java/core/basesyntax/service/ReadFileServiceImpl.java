@@ -1,14 +1,12 @@
 package core.basesyntax.service;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileServiceImpl implements FileService {
+public class ReadFileServiceImpl implements ReadFileService {
 
     @Override
     public List<String> readFromFile(String filePath) {
@@ -26,15 +24,5 @@ public class FileServiceImpl implements FileService {
         }
 
         return stringList;
-    }
-
-    @Override
-    public void writeReportToFile(String report, String reportPath) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(reportPath))) {
-            bufferedWriter.write(report);
-
-        } catch (IOException e) {
-            throw new RuntimeException("Can't write file " + reportPath, e);
-        }
     }
 }

@@ -22,10 +22,10 @@ public class ReportGeneratorTest {
     }
 
     @Test
-    public void test() {
-        String expected = "fruit,quantity\n"
-                + "banana,152\n"
-                + "apple,90\n";
+    public void reportGenerator_checkValidReport_ok() {
+        String expected = "fruit,quantity" + System.lineSeparator()
+                + "banana,152" + System.lineSeparator()
+                + "apple,90" + System.lineSeparator();
         String report = reportGenerator.getReport();
 
         Assert.assertEquals(expected, report);

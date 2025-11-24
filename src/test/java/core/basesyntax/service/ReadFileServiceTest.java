@@ -5,22 +5,18 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FileServiceTest {
-    private FileService fileService;
+public class ReadFileServiceTest {
+    private static final String FILE_PATH = "src/test/resources/fruits.csv";
+    private ReadFileService readFileService;
 
     @Before
     public void setUp() throws Exception {
-        fileService = new FileServiceImpl();
+        readFileService = new ReadFileServiceImpl();
     }
 
     @Test(expected = RuntimeException.class)
     public void readFromFile_incorrectPath_notOk() {
-        fileService.readFromFile("");
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void writeFromFile_incorrectPath_notOk() {
-        fileService.writeReportToFile("","");
+        readFileService.readFromFile("");
     }
 
     @Test
@@ -30,8 +26,7 @@ public class FileServiceTest {
                 "s,banana,100", "p,banana,13", "r,apple,10",
                 "p,apple,20", "p,banana,5", "s,banana,50");
 
-        String filePath = "src/test/resources/fruits.csv";
-        List<String> readFileList = fileService.readFromFile(filePath);
+        List<String> readFileList = readFileService.readFromFile(FILE_PATH);
 
         Assert.assertEquals(expected, readFileList);
     }

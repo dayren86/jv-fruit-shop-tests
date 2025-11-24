@@ -16,7 +16,8 @@ public class DataConverterImpl implements DataConverter {
         for (int i = 1; i < listTransactionFromFile.size(); i++) {
             String[] split = listTransactionFromFile.get(i).split(",");
 
-            FruitTransaction.Operation operation = convertOperation(split[0]);
+            FruitTransaction.Operation operation =
+                    FruitTransaction.Operation.SUPPLY.getCode(split[0]);
 
             checkValidationSlitString(split);
 
@@ -36,16 +37,6 @@ public class DataConverterImpl implements DataConverter {
         if (Integer.parseInt(splitString[2]) < 0) {
             throw new RuntimeException("Quantity negative value");
         }
-    }
-
-    private FruitTransaction.Operation convertOperation(String operation) {
-        return switch (operation) {
-            case "b" -> FruitTransaction.Operation.BALANCE;
-            case "s" -> FruitTransaction.Operation.SUPPLY;
-            case "p" -> FruitTransaction.Operation.PURCHASE;
-            case "r" -> FruitTransaction.Operation.RETURN;
-            default -> throw new IllegalStateException("Unexpected value: " + operation);
-        };
     }
 }
 

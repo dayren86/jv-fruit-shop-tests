@@ -1,14 +1,12 @@
 package core.basesyntax.model;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class FruitTransaction {
     private Operation operation;
     private String name;
     private Integer quantity;
-
-    public FruitTransaction() {
-    }
 
     public FruitTransaction(String name) {
         this.name = name;
@@ -75,8 +73,11 @@ public class FruitTransaction {
             this.code = code;
         }
 
-        public String getCode() {
-            return code;
+        public Operation getCode(String operation) {
+            return Arrays.stream(values())
+                    .filter(o -> o.code.equals(operation))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalStateException("Unexpected value: " + operation));
         }
     }
 }
