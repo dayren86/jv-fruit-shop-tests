@@ -2,16 +2,18 @@ package core.basesyntax.strategy.operation;
 
 import core.basesyntax.dao.FruitsDao;
 import core.basesyntax.dao.FruitsDaoImpl;
+import core.basesyntax.db.Storage;
 import core.basesyntax.model.FruitTransaction;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class BalanceOperationTest {
     private FruitsDao fruitsDao;
     private OperationHandler balanceOperation;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         fruitsDao = new FruitsDaoImpl();
         fruitsDao.add(
@@ -27,6 +29,11 @@ public class BalanceOperationTest {
                 new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 100));
         FruitTransaction fruitTransaction = fruitsDao.get(new FruitTransaction("banana"));
         Integer expected = 100;
-        Assert.assertNotEquals(expected, fruitTransaction.getQuantity());
+        Assertions.assertNotEquals(expected, fruitTransaction.getQuantity());
+    }
+
+    @AfterAll
+    static void afterAll() {
+        Storage.fruitsStorage.clear();
     }
 }

@@ -4,16 +4,16 @@ import core.basesyntax.dao.FruitsDao;
 import core.basesyntax.dao.FruitsDaoImpl;
 import core.basesyntax.db.Storage;
 import core.basesyntax.model.FruitTransaction;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ReturnOperationTest {
     private FruitsDao fruitsDao;
     private OperationHandler returnOperation;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         fruitsDao = new FruitsDaoImpl();
         fruitsDao.add(
@@ -29,10 +29,10 @@ public class ReturnOperationTest {
                 new FruitTransaction(FruitTransaction.Operation.RETURN, "banana", 5));
         FruitTransaction fruitTransaction = fruitsDao.get(new FruitTransaction("banana"));
         Integer expected = 405;
-        Assert.assertEquals(expected, fruitTransaction.getQuantity());
+        Assertions.assertEquals(expected, fruitTransaction.getQuantity());
     }
 
-    @After
+    @AfterEach
     public void afterClass() {
         Storage.fruitsStorage.clear();
     }

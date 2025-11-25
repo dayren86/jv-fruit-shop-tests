@@ -3,15 +3,15 @@ package core.basesyntax.service;
 import core.basesyntax.dao.FruitsDao;
 import core.basesyntax.dao.FruitsDaoImpl;
 import core.basesyntax.model.FruitTransaction;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ReportGeneratorTest {
-    private ReportGenerator reportGenerator;
     private FruitsDao fruitsDao;
+    private ReportGenerator reportGenerator;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         fruitsDao = new FruitsDaoImpl();
         fruitsDao.add(
@@ -28,6 +28,6 @@ public class ReportGeneratorTest {
                 + "apple,90" + System.lineSeparator();
         String report = reportGenerator.getReport();
 
-        Assert.assertEquals(expected, report);
+        Assertions.assertEquals(expected, report);
     }
 }

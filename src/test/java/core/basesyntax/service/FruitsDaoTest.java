@@ -4,62 +4,67 @@ import core.basesyntax.dao.FruitsDao;
 import core.basesyntax.dao.FruitsDaoImpl;
 import core.basesyntax.db.Storage;
 import core.basesyntax.model.FruitTransaction;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.List;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 public class FruitsDaoTest {
+    private static final String FRUIT_BANANA = "banana";
+    private static final String FRUIT_APPLE = "apple";
+    private static final String FRUIT_PAPER = "paper";
     private FruitsDao fruitsDao;
-    private List<FruitTransaction> fruitTransactions;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.fruitsDao = new FruitsDaoImpl();
-        fruitsDao.add(new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 400));
-        fruitsDao.add(new FruitTransaction(FruitTransaction.Operation.BALANCE, "apple", 100));
-        fruitTransactions = List.of(
-                new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 400),
-                new FruitTransaction(FruitTransaction.Operation.BALANCE, "apple", 100));
+        fruitsDao.add(new FruitTransaction(FruitTransaction.Operation.BALANCE, FRUIT_BANANA, 400));
+        fruitsDao.add(new FruitTransaction(FruitTransaction.Operation.BALANCE, FRUIT_APPLE, 100));
     }
 
-    @After
-    public void afterClass() {
-        Storage.fruitsStorage.clear();
-    }
-
-    @Test(expected = RuntimeException.class)
+    @Test
     public void fruitsDao_getIncorrectValue_notOk() {
-        fruitsDao.get(new FruitTransaction(FruitTransaction.Operation.BALANCE, "paper", 50));
+        Assertions.assertThrows(RuntimeException.class,
+                () -> fruitsDao.get(new FruitTransaction(FruitTransaction.Operation.BALANCE, FRUIT_PAPER, 50)));
     }
 
     @Test
     public void fruitsDao_getCorrectValue_Ok() {
         FruitTransaction expectedBanana
-                = new FruitTransaction(FruitTransaction.Operation.BALANCE, "banana", 400);
+                = new FruitTransaction(FruitTransaction.Operation.BALANCE, FRUIT_BANANA, 400);
         FruitTransaction fruitTransactionBanana = fruitsDao.get(
-                new FruitTransaction("banana"));
-        Assert.assertEquals(expectedBanana, fruitTransactionBanana);
+                new FruitTransaction(FRUIT_BANANA));
+        Assertions.assertEquals(expectedBanana, fruitTransactionBanana);
 
         FruitTransaction expectedApple
-                = new FruitTransaction(FruitTransaction.Operation.BALANCE, "apple", 100);
+                = new FruitTransaction(FruitTransaction.Operation.BALANCE, FRUIT_APPLE, 100);
         FruitTransaction fruitTransactionApple = fruitsDao.get(
-                new FruitTransaction("apple"));
-        Assert.assertEquals(expectedApple, fruitTransactionApple);
+                new FruitTransaction(FRUIT_APPLE));
+        Assertions.assertEquals(expectedApple, fruitTransactionApple);
     }
 
     @Test
     public void fruitsDao_getAllFruits_Ok() {
+        List<FruitTransaction> expectedFruitTransactions = List.of(
+                new FruitTransaction(FruitTransaction.Operation.BALANCE, FRUIT_BANANA, 400),
+                new FruitTransaction(FruitTransaction.Operation.BALANCE, FRUIT_APPLE, 100));
+
         List<FruitTransaction> allTransactions = fruitsDao.getAll();
-        Assert.assertEquals(fruitTransactions, allTransactions);
+        Assertions.assertEquals(expectedFruitTransactions, allTransactions);
     }
 
     @Test
     public void fruitsDao_setFruits_Ok() {
         FruitTransaction fruitTransaction
-                = new FruitTransaction(FruitTransaction.Operation.RETURN, "banana", 200);
+                = new FruitTransaction(FruitTransaction.Operation.RETURN, FRUIT_BANANA, 200);
         fruitsDao.set(fruitTransaction);
-        Assert.assertEquals(fruitTransaction, fruitsDao.get(fruitTransaction));
+        Assertions.assertEquals(fruitTransaction, fruitsDao.get(fruitTransaction));
+    }
+
+    @AfterEach
+    public void afterClass() {
+        Storage.fruitsStorage.clear();
     }
 }

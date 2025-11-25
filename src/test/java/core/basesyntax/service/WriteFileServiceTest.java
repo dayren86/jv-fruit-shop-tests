@@ -1,31 +1,42 @@
 package core.basesyntax.service;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class WriteFileServiceTest {
+    private static final String INCORRECT_FILE_PATH = "";
+    private static final String CORRECT_FILE_PATH = "src/test/resources/fruits_report.csv";
+    private static final String EMPTY_REPORT = "";
     private WriteFileService writeFileService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         writeFileService = new WriteFileServiceImpl();
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void writeFile_incorrectPath_notOk() {
         String report = "fruit,quantity" + System.lineSeparator()
                 + "banana,152" + System.lineSeparator()
                 + "apple,90" + System.lineSeparator();
-        writeFileService.writeReportToFile(report,"");
+
+        Assertions.assertThrows(RuntimeException.class,
+                () -> writeFileService.writeReportToFile(report, INCORRECT_FILE_PATH),
+                "Incorrect path to write file");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void writeFile_emptyReport_notOk() {
-        writeFileService.writeReportToFile("", "");
+        Assertions.assertThrows(RuntimeException.class,
+                () -> writeFileService.writeReportToFile(EMPTY_REPORT, CORRECT_FILE_PATH),
+                "Report is empty");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void writeFile_reportNull_notOk() {
-        writeFileService.writeReportToFile(null, "");
+        Assertions.assertThrows(RuntimeException.class,
+                () -> writeFileService.writeReportToFile(null,CORRECT_FILE_PATH),
+                "Report is null");
     }
 }

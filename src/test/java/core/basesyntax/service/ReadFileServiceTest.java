@@ -1,33 +1,38 @@
 package core.basesyntax.service;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.List;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
 
 public class ReadFileServiceTest {
-    private static final String FILE_PATH = "src/test/resources/fruits.csv";
+    private static final String INCORRECT_FILE_PATH = "";
+    private static final String CORRECT_FILE_PATH = "src/test/resources/fruits.csv";
     private ReadFileService readFileService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         readFileService = new ReadFileServiceImpl();
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void readFromFile_incorrectPath_notOk() {
-        readFileService.readFromFile("");
+        Assertions.assertThrows(RuntimeException.class,
+                () -> readFileService.readFromFile(INCORRECT_FILE_PATH),
+                "Can't find file by path: " + INCORRECT_FILE_PATH);
     }
 
     @Test
-    public void readFromFile() {
+    public void readFromFile_oK() {
         List<String> expected = List.of("type,fruit,quantity",
                 "b,banana,20", "b,apple,100",
                 "s,banana,100", "p,banana,13", "r,apple,10",
                 "p,apple,20", "p,banana,5", "s,banana,50");
 
-        List<String> readFileList = readFileService.readFromFile(FILE_PATH);
+        List<String> readFileList = readFileService.readFromFile(CORRECT_FILE_PATH);
 
-        Assert.assertEquals(expected, readFileList);
+        Assertions.assertEquals(expected, readFileList);
     }
 }

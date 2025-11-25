@@ -4,16 +4,16 @@ import core.basesyntax.dao.FruitsDao;
 import core.basesyntax.dao.FruitsDaoImpl;
 import core.basesyntax.db.Storage;
 import core.basesyntax.model.FruitTransaction;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class PurchaseOperationTest {
     private FruitsDao fruitsDao;
     private OperationHandler purchaseOperation;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         fruitsDao = new FruitsDaoImpl();
         fruitsDao.add(
@@ -29,16 +29,18 @@ public class PurchaseOperationTest {
                 new FruitTransaction(FruitTransaction.Operation.PURCHASE, "banana", 20));
         FruitTransaction fruitTransaction = fruitsDao.get(new FruitTransaction("banana"));
         Integer expected = 380;
-        Assert.assertEquals(expected, fruitTransaction.getQuantity());
+        Assertions.assertEquals(expected, fruitTransaction.getQuantity());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void purchaseTransaction_incorrectValue_notOk() {
-        purchaseOperation.transaction(
-                new FruitTransaction(FruitTransaction.Operation.PURCHASE, "banana", 500));
+        Assertions.assertThrows(RuntimeException.class,
+                () -> purchaseOperation.transaction(
+                        new FruitTransaction(FruitTransaction.Operation.PURCHASE, "banana", 500)),
+                "Quantity negative value");
     }
 
-    @After
+    @AfterEach
     public void afterClass() {
         Storage.fruitsStorage.clear();
     }

@@ -8,18 +8,20 @@ import core.basesyntax.strategy.operation.OperationHandler;
 import core.basesyntax.strategy.operation.PurchaseOperation;
 import core.basesyntax.strategy.operation.ReturnOperation;
 import core.basesyntax.strategy.operation.SupplyOperation;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
 
 public class OperationStrategyTest {
     private FruitsDao fruitsDao;
     private OperationStrategy operationStrategy;
     private Map<FruitTransaction.Operation, OperationHandler> operationHandlers;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         fruitsDao = new FruitsDaoImpl();
         operationHandlers = new HashMap<>();
@@ -36,7 +38,7 @@ public class OperationStrategyTest {
         OperationHandler expected = new PurchaseOperation(fruitsDao);
         OperationHandler operationHandler
                 = operationStrategy.get(FruitTransaction.Operation.PURCHASE);
-        Assert.assertEquals(expected.getClass(), operationHandler.getClass());
+        Assertions.assertEquals(expected.getClass(), operationHandler.getClass());
     }
   
 }
