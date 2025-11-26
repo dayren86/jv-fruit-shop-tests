@@ -3,10 +3,10 @@ package core.basesyntax.service;
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.converter.DataConverter;
 import core.basesyntax.service.converter.DataConverterImpl;
+import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-import java.util.List;
 
 public class DataConverterTest {
     private static final String HEADER = "type,fruit,quantity";

@@ -4,12 +4,11 @@ import core.basesyntax.dao.FruitsDao;
 import core.basesyntax.dao.FruitsDaoImpl;
 import core.basesyntax.db.Storage;
 import core.basesyntax.model.FruitTransaction;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 public class FruitsDaoTest {
     private static final String FRUIT_BANANA = "banana";
@@ -27,7 +26,8 @@ public class FruitsDaoTest {
     @Test
     public void fruitsDao_getIncorrectValue_notOk() {
         Assertions.assertThrows(RuntimeException.class,
-                () -> fruitsDao.get(new FruitTransaction(FruitTransaction.Operation.BALANCE, FRUIT_PAPER, 50)));
+                () -> fruitsDao.get(
+                        new FruitTransaction(FruitTransaction.Operation.BALANCE, FRUIT_PAPER, 50)));
     }
 
     @Test

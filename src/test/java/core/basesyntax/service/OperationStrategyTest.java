@@ -8,13 +8,11 @@ import core.basesyntax.strategy.operation.OperationHandler;
 import core.basesyntax.strategy.operation.PurchaseOperation;
 import core.basesyntax.strategy.operation.ReturnOperation;
 import core.basesyntax.strategy.operation.SupplyOperation;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class OperationStrategyTest {
     private FruitsDao fruitsDao;

@@ -1,11 +1,9 @@
 package core.basesyntax.service;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 
 public class ReadFileServiceTest {
     private static final String INCORRECT_FILE_PATH = "";
